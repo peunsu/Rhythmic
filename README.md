@@ -1,2 +1,2 @@
 # Rhythm Game Bot
- Discord bot for rhythm games, including Arcaea, Cytus, Lanota, etc.
+ Rhythmic is discord bot for rhythm games, including Arcaea, Cytus, Lanota, etc.
