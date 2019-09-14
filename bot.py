@@ -29,9 +29,9 @@ async def ping(ctx):
 @client.command(pass_context=True)
 async def help(ctx):
     embed = discord.Embed(colour = discord.Colour.blue(), title="Rhythmic Command Help", description="Hello! I'm Rhythmic! Here is command list:")
-    embed.add_field(name = "ARCAEA", value="`ramdom`", inline=False)
-    embed.add_field(name = "CYTUS 2", value="`random`", inline=False)
-    embed.add_field(name = "LANOTA", value="`random`", inline=False)
+    embed.add_field(name = "ARCAEA", value="`arcaea {search}`: Search for Arcaea song info.", inline=False)
+    #embed.add_field(name = "CYTUS 2", value="`random`", inline=False)
+    #embed.add_field(name = "LANOTA", value="`random`", inline=False)
 
     await ctx.send(embed=embed)
 
