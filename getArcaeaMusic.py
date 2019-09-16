@@ -36,26 +36,26 @@ def process_data(inputData):
             df.loc[i] = arr
         arr.clear()
 
-        df = df.replace({
-            ' Arc': 'Arcaea',
-            ' EC': 'Eternal Core',
-            ' CS': 'Crimson Solace',
-            ' MA': 'Memory Archive',
-            ' Dnx': 'Dynamix Collaboration',
-            ' AV': 'Ambivalent Vision',
-            ' VL': 'Vicious Labyrinth',
-            ' Stl': 'Stellights Collaboration',
-            ' Lnt': 'Lanota Collaboration',
-            ' BE': 'Binary Enfold',
-            ' LS': 'Luminous Sky',
-            ' TS': 'Tone Sphere Collaboration',
-            ' GC': 'Groove Coaster Collaboration',
-            ' AR': 'Absolute Reason',
-            ' CHN': 'CHUNITHM Collaboration',
-            ' AP': 'Adverse Prelude',
-            ' SR': 'Sunset Radiance'})
-
         i = i + 1
+
+    df = df.replace({
+        ' Arc': 'Arcaea',
+        ' EC': 'Eternal Core',
+        ' CS': 'Crimson Solace',
+        ' MA': 'Memory Archive',
+        ' Dnx': 'Dynamix Collaboration',
+        ' AV': 'Ambivalent Vision',
+        ' VL': 'Vicious Labyrinth',
+        ' Stl': 'Stellights Collaboration',
+        ' Lnt': 'Lanota Collaboration',
+        ' BE': 'Binary Enfold',
+        ' LS': 'Luminous Sky',
+        ' TS': 'Tone Sphere Collaboration',
+        ' GC': 'Groove Coaster Collaboration',
+        ' AR': 'Absolute Reason',
+        ' CHN': 'CHUNITHM Collaboration',
+        ' AP': 'Adverse Prelude',
+        ' SR': 'Sunset Radiance'})
 
     df.to_csv(os.path.join(output_path, output_file), encoding='utf-8-sig', index=False, header=True)
 
