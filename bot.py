@@ -8,6 +8,7 @@ from random import randint
 
 arcaea_df = pd.read_csv("data/arcaea.csv", encoding='utf-8-sig')
 cytus2_df = pd.read_csv("data/cytus2.csv", encoding='utf-8-sig')
+dynamix_df = pd.read_csv("data/dynamix.csv", encoding='utf-8-sig')
 
 arcaea_url_list = {
     'Arcaea': 'https://vignette.wikia.nocookie.net/iowiro/images/7/7d/Pack-arcaea.png/',
@@ -162,6 +163,40 @@ async def cytus2(ctx, *, message):
         embed = discord.Embed(colour = discord.Colour.red(), title="Cytus2 Song Info", description=err_msg['no_result'])
         await ctx.send(embed=embed)
         print("Cytus2 Song Info: No Result")
+
+@client.command(pass_context=True)
+async def dynamix(ctx, *, message):
+    df_temp = pd.DataFrame()
+
+    for list in dynamix_df.loc[:, 'song']:
+        ratio = SequenceMatcher(None, message, list.lower()).ratio()
+        if ratio >= 0.7:
+            df_temp = dynamix_df.loc[dynamix_df['song'] == list]
+
+    try:
+        song = df_temp['song'].values[0]
+        artist = df_temp['artist'].values[0]
+        casual = str(df_temp['casual'].values[0])
+        normal = str(df_temp['normal'].values[0])
+        hard = str(df_temp['hard'].values[0])
+        mega = str(df_temp['mega'].values[0])
+        giga = str(df_temp['giga'].values[0])
+        diff = casual + " / " + normal + " / " + hard + " / " + mega + " / " + giga
+        bpm = str(df_temp['bpm'].values[0])
+
+        embed = discord.Embed(colour = discord.Colour.dark_blue(), title="Dynamix Song Info")
+        embed.add_field(name = "Song", value=song, inline=False)
+        embed.add_field(name = "Artist", value=artist, inline=False)
+        embed.add_field(name = "Difficulty", value=diff, inline=True)
+        embed.add_field(name = "BPM", value=bpm, inline=True)
+
+        await ctx.send(embed=embed)
+        print("Dynamix Song Info: " + song)
+    except KeyError:
+        embed = discord.Embed(colour = discord.Colour.red(), title="Dynamix Song Info", description=err_msg['no_result'])
+        await ctx.send(embed=embed)
+        print("Dynamix Song Info: No Result")
+
 
 @client.command(pass_context=True)
 async def random(ctx, *args):
