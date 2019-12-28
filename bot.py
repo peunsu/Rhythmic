@@ -89,10 +89,11 @@ async def arcaea(ctx, *, message):
 
         await ctx.send(embed=embed)
         print("Arcaea Song Info: " + song)
-    except:
+    except Exception as e:
         embed = discord.Embed(colour = discord.Colour.red(), title="Arcaea Song Info", description=err_msg['no_result'])
         await ctx.send(embed=embed)
         print("Arcaea Song Info: No Result")
+        print(e)
 
 #Cytus2 Search
 @client.command(pass_context=True)
@@ -131,10 +132,11 @@ async def cytus2(ctx, *, message):
 
         await ctx.send(embed=embed)
         print("Cytus2 Song Info: " + song)
-    except:
+    except Exception as e:
         embed = discord.Embed(colour = discord.Colour.red(), title="Cytus2 Song Info", description=err_msg['no_result'])
         await ctx.send(embed=embed)
         print("Cytus2 Song Info: No Result")
+        print(e)
 
 #Dynamix Search
 @client.command(pass_context=True)
@@ -165,10 +167,11 @@ async def dynamix(ctx, *, message):
 
         await ctx.send(embed=embed)
         print("Dynamix Song Info: " + song)
-    except:
+    except Exception as e:
         embed = discord.Embed(colour = discord.Colour.red(), title="Dynamix Song Info", description=err_msg['no_result'])
         await ctx.send(embed=embed)
         print("Dynamix Song Info: No Result")
+        print(e)
 
 #Lanota Search
 @client.command(pass_context=True)
@@ -206,10 +209,11 @@ async def lanota(ctx, *, message):
 
         await ctx.send(embed=embed)
         print("Lanota Song Info: " + song)
-    except:
+    except Exception as e:
         embed = discord.Embed(colour = discord.Colour.red(), title="Lanota Song Info", description=err_msg['no_result'])
         await ctx.send(embed=embed)
         print("Lanota Song Info: No Result")
+        print(e)
 
 #Random Song
 @client.command(pass_context=True)
