@@ -2,9 +2,6 @@ import pandas as pd
 import numpy as np
 from . import getDict
 
-arcaea_url_list = getDict.arcaea()
-cytus2_url_list = getDict.cytus2()
-
 def getList(input_df, loc, game):
     try:
         startLoc = int(loc) * 10 - 9
@@ -19,17 +16,25 @@ def getList(input_df, loc, game):
 
         arr = []
 
-        firstPage = int(loc) // 10 + 1
+        firstPage = int(loc)
         endPage = len(input_df.index) // 10 + 1
         for i, j in zip(range(0, endLoc-startLoc), range(startLoc, endLoc)):
-            arr.append(str(j) + ". " + df_temp.iloc[i, 1])
-            output = "\n".join(arr)
             if game == 0:
+                arr.append(str(j) + ". " + df_temp.iloc[i, 1])
+                output = "\n".join(arr)
                 output_text = "```css\n[Arcaea Song List (" + str(firstPage) + " of " + str(endPage) + ")]\n\n" + output + "\n```"
             elif game == 1:
+                arr.append(str(j) + ". " + df_temp.iloc[i, 1])
+                output = "\n".join(arr)
                 output_text = "```css\n[Cytus2 Song List (" + str(firstPage) + " of " + str(endPage) + ")]\n\n" + output + "\n```"
             elif game == 2:
+                arr.append(str(j) + ". " + df_temp.iloc[i, 1])
+                output = "\n".join(arr)
                 output_text = "```css\n[Dynamix Song List (" + str(firstPage) + " of " + str(endPage) + ")]\n\n" + output + "\n```"
+            elif game == 3:
+                arr.append(str(j) + ". " + df_temp.iloc[i, 0])
+                output = "\n".join(arr)
+                output_text = "```css\n[Lanota Song List (" + str(firstPage) + " of " + str(endPage) + ")]\n\n" + output + "\n```"
 
         return output_text
     except:

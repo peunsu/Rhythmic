@@ -6,19 +6,25 @@ import numpy as np
 from difflib import SequenceMatcher
 from tools import randomSong, getDict, getSongList
 
+#Load URL
 arcaea_url_list = getDict.arcaea()
 cytus2_url_list = getDict.cytus2()
+lanota_url_list = getDict.lanota()
 err_msg = getDict.err()
 
+#Load Song Data
 arcaea_df = pd.read_csv("data/arcaea.csv", encoding='utf-8-sig')
 cytus2_df = pd.read_csv("data/cytus2.csv", encoding='utf-8-sig')
 dynamix_df = pd.read_csv("data/dynamix.csv", encoding='utf-8-sig')
+lanota_df = pd.read_csv("data/lanota.csv", encoding='utf-8-sig')
 
+#Bot Information
 client = commands.Bot(command_prefix='~')
 client.remove_command('help')
 
 token = "NjIyMzQxNzQ2MTg5NDAyMTMy.XXyksg.EZP5X3C4hBF_o_lhIYOWtFuU0A4"
 
+#Login
 @client.event
 async def on_ready():
     print("다음으로 로그인합니다: ")
@@ -29,23 +35,26 @@ async def on_ready():
     activity = discord.Game(name="Rhymical! :D")
     await client.change_presence(status=discord.Status.online, activity=activity)
 
+#Ping Pong
 @client.command(pass_context=True)
 async def ping(ctx):
     await ctx.send("pong!")
 
+#Help
 @client.command(pass_context=True)
 async def help(ctx):
     embed = discord.Embed(colour = discord.Colour.blue(), title="Rhythmic Command Help", description="Hello! I'm Rhythmic! Here is command list:")
     embed.add_field(name = "ARCAEA", value="`arcaea [search]`: Search for Arcaea song info.", inline=False)
     embed.add_field(name = "CYTUS 2", value="`cytus2 [search]`: Search for Cytus2 song info.", inline=False)
     embed.add_field(name = "DYNAMIX", value="`dynamix [search]`: Search for Dynamix song info.", inline=False)
-    embed.add_field(name = "RANDOM", value="`random [arcaea/cytus2/dynamix] (level)`: Random Songs! LOL")
-    embed.add_field(name = "SONG LIST", value="`songlist [arcaea/cytus2/dynamix] [listnumber]`: Get list of songs.")
-    #embed.add_field(name = "LANOTA", value="`random`", inline=False)
+    embed.add_field(name = "LANOTA", value="`lanota [search]`: Search for Lanota song info.", inline=False)
+    embed.add_field(name = "RANDOM", value="`random [game_name] (level)`: Random Songs! LOL", inline=False)
+    embed.add_field(name = "SONG LIST", value="`songlist [game_name] [page_number]`: Get list of songs to your DM.")
     embed.set_footer(text="Bot Made by Xestiny_")
 
     await ctx.send(embed=embed)
 
+#Arcaea Search
 @client.command(pass_context=True)
 async def arcaea(ctx, *, message):
     df_temp = pd.DataFrame()
@@ -61,7 +70,7 @@ async def arcaea(ctx, *, message):
         pst = str(df_temp['pst'].values[0])
         prs = str(df_temp['prs'].values[0])
         ftr = str(df_temp['ftr'].values[0])
-        diff = pst + " / " + prs + " / " + ftr
+        diff = " / ".join([pst, prs, ftr])
         length = str(df_temp['len'].values[0])
         bpm = str(df_temp['bpm'].values[0])
         pack = df_temp['pack'].values[0]
@@ -85,6 +94,7 @@ async def arcaea(ctx, *, message):
         await ctx.send(embed=embed)
         print("Arcaea Song Info: No Result")
 
+#Cytus2 Search
 @client.command(pass_context=True)
 async def cytus2(ctx, *, message):
     df_temp = pd.DataFrame()
@@ -100,7 +110,7 @@ async def cytus2(ctx, *, message):
         easy = str(df_temp['easy'].values[0])
         hard = str(df_temp['hard'].values[0])
         chaos = str(df_temp['chaos'].values[0])
-        diff = easy + " / " + hard + " / " + chaos
+        diff = " / ".join([easy, hard, chaos])
         try:
             length_temp = int(df_temp['len'].values[0])
             length = "{0}:{1:02d}".format(length_temp // 60, length_temp % 60)
@@ -126,6 +136,7 @@ async def cytus2(ctx, *, message):
         await ctx.send(embed=embed)
         print("Cytus2 Song Info: No Result")
 
+#Dynamix Search
 @client.command(pass_context=True)
 async def dynamix(ctx, *, message):
     df_temp = pd.DataFrame()
@@ -143,7 +154,7 @@ async def dynamix(ctx, *, message):
         hard = str(df_temp['hard'].values[0])
         mega = str(df_temp['mega'].values[0])
         giga = str(df_temp['giga'].values[0])
-        diff = casual + " / " + normal + " / " + hard + " / " + mega + " / " + giga
+        diff = " / ".join([casual, normal, hard, mega, giga])
         bpm = str(df_temp['bpm'].values[0])
 
         embed = discord.Embed(colour = discord.Colour.dark_blue(), title="Dynamix Song Info")
@@ -159,12 +170,54 @@ async def dynamix(ctx, *, message):
         await ctx.send(embed=embed)
         print("Dynamix Song Info: No Result")
 
+#Lanota Search
+@client.command(pass_context=True)
+async def lanota(ctx, *, message):
+    df_temp = pd.DataFrame()
 
+    try:
+        for list in lanota_df.loc[:, 'song']:
+            ratio = SequenceMatcher(None, message, list.lower()).ratio()
+            if ratio >= 0.7:
+                df_temp = lanota_df.loc[lanota_df['song'] == list]
+
+        song = df_temp['song'].values[0]
+        artist = df_temp['artist'].values[0]
+        area = df_temp['area'].values[0]
+        whisper = str(df_temp['whisper'].values[0])
+        acoustic = str(df_temp['acoustic'].values[0])
+        ultra = str(df_temp['ultra'].values[0])
+        master = str(df_temp['master'].values[0])
+        diff = " / ".join([whisper, acoustic, ultra, master])
+        length = str(df_temp['length'].values[0])
+        bpm = str(df_temp['bpm'].values[0])
+        chapter = df_temp['chapter'].values[0]
+
+        embed = discord.Embed(colour = discord.Colour.gold(), title="Lanota Song Info")
+        embed.add_field(name = "Song", value=song, inline=False)
+        embed.add_field(name = "Artist", value=artist, inline=False)
+        embed.add_field(name = "Difficulty", value=diff, inline=True)
+        embed.add_field(name = "Length", value=length, inline=True)
+        embed.add_field(name = "BPM", value=bpm, inline=True)
+        embed.add_field(name = "Chapter", value=chapter, inline=True)
+        embed.add_field(name = "Area", value=area, inline=True)
+
+        embed.set_thumbnail(url=lanota_url_list[chapter])
+
+        await ctx.send(embed=embed)
+        print("Lanota Song Info: " + song)
+    except:
+        embed = discord.Embed(colour = discord.Colour.red(), title="Lanota Song Info", description=err_msg['no_result'])
+        await ctx.send(embed=embed)
+        print("Lanota Song Info: No Result")
+
+#Random Song
 @client.command(pass_context=True)
 async def random(ctx, *args):
     if len(args) != 0:
         try:
             if args[0].lower() == "arcaea":
+                #Check the number of arguments
                 if len(args) == 1:
                     temp = randomSong.arcaea(arcaea_df, None)
                 elif len(args) == 2:
@@ -186,6 +239,7 @@ async def random(ctx, *args):
 
                     await ctx.send(embed=embed)
                     print("Arcaea Random: " + temp[0])
+                #Catch ValueError Exception
                 elif temp == 0:
                     embed = discord.Embed(colour = discord.Colour.red(), title="Random Song: Arcaea", description=err_msg['value_error'])
                     await ctx.send(embed=embed)
@@ -239,14 +293,45 @@ async def random(ctx, *args):
                     embed = discord.Embed(colour = discord.Colour.red(), title="Random Song: Dynamix", description=err_msg['value_error'])
                     await ctx.send(embed=embed)
                     print("Dynamix Random: ValueError")
+
+            elif args[0].lower() == "lanota":
+                if len(args) == 1:
+                    temp = randomSong.lanota(lanota_df, None)
+                elif len(args) == 2:
+                    temp = randomSong.lanota(lanota_df, args[1])
+                else:
+                    raise IndexError
+
+                if temp != 0:
+                    embed = discord.Embed(colour = discord.Colour.gold(), title="Random Song: Lanota")
+                    embed.add_field(name = "Song", value=temp[0], inline=False)
+                    embed.add_field(name = "Artist", value=temp[1], inline=False)
+                    embed.add_field(name = "Difficulty", value=temp[2], inline=True)
+                    embed.add_field(name = "Length", value=temp[3], inline=True)
+                    embed.add_field(name = "BPM", value=temp[4], inline=True)
+                    embed.add_field(name = "Chapter", value=temp[5], inline=True)
+                    embed.add_field(name = "Area", value=temp[6], inline=True)
+
+                    embed.set_thumbnail(url=temp[7])
+
+                    await ctx.send(embed=embed)
+                    print("Lanota Random: " + temp[0])
+                elif temp == 0:
+                    embed = discord.Embed(colour = discord.Colour.red(), title="Random Song: Lanota", description=err_msg['value_error'])
+                    await ctx.send(embed=embed)
+                    print("Lanota Random: ValueError")
+            #If input is not existing game
             else:
                 embed = discord.Embed(colour = discord.Colour.red(), title="Random Song", description=err_msg['usage_random'])
                 await ctx.send(embed=embed)
                 print("Random Song: Argument Error")
-        except:
+        #Catch Any Exception
+        except Exception as e:
             embed = discord.Embed(colour = discord.Colour.red(), title="Random Song", description=err_msg['usage_random'])
             await ctx.send(embed=embed)
             print("Random Song: Argument Error")
+            print(e)
+    #No Argument
     else:
         embed = discord.Embed(colour = discord.Colour.red(), title="Random Song", description=err_msg['usage_random'])
         await ctx.send(embed=embed)
@@ -254,6 +339,7 @@ async def random(ctx, *args):
 
 @client.command(pass_context=True)
 async def songlist(ctx, *args):
+    #Check the number of arguments
     if len(args) == 2:
         if args[0].lower() == "arcaea":
             temp = getSongList.getList(arcaea_df, args[1], 0)
@@ -287,11 +373,22 @@ async def songlist(ctx, *args):
                 embed = discord.Embed(colour = discord.Colour.red(), title="Dynamix Song List", description=err_msg['out_of_index'])
                 await ctx.send(embed=embed)
                 print("Dynamix Song List: Out of index")
+        elif args[0].lower() == "lanota":
+            temp = getSongList.getList(lanota_df, args[1], 3)
 
+            if temp != 0:
+                await ctx.author.send(temp)
+                print("Lanota Song List: " + args[1])
+            elif temp == 0:
+                embed = discord.Embed(colour = discord.Colour.red(), title="Lanota Song List", description=err_msg['out_of_index'])
+                await ctx.send(embed=embed)
+                print("Lanota Song List: Out of index")
+        #If input is not existing game
         else:
             embed = discord.Embed(colour = discord.Colour.red(), title="Song List", description=err_msg['usage_songlist'])
             await ctx.send(embed=embed)
             print("Song List: Unknown Argument")
+    #No Argument or only 1 argument
     else:
         embed = discord.Embed(colour = discord.Colour.red(), title="Song List", description=err_msg['usage_songlist'])
         await ctx.send(embed=embed)

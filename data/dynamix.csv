@@ -17,7 +17,7 @@
 208,Kant,Aozic,3,6,10,-,-,3.10,128
 263,Life Style,ArcadeStuff,3,Ø,9,13,-,3.12,142
 233,Startail,Arch,Ø,4,9,-,15,3.11,175
-131,Evoltex (poppi'n mix),Arch vs n3pu,Ø,6,10,13,15,3.5,205
+131,Evoltex (poppi'n mix),Arch vs n3pu,Ø,6,10,13,15,3.5,205
 184,diSTractiOn PoInT,Arctures & DJ KemoNOiZE,Ø,4,10,11,14,3.8,145
 168,Flashback,ARForest,2,6,10,12,-,3.8,195
 74,Hemisphere,ARForest,Ø,7,9,14,-,3.0,193
@@ -25,7 +25,7 @@
 78,WaH!,ARForest,2,5,10,-,-,3.0,185
 96,Nible,ARForest vs SC-KIM,3,6,8,-,-,3.2,163
 221,Convictor,Ayatsugu_Otowa,2,4,8,-,-,3.11,150
-59,Goldelius,Ayatsugu_Otowa,3,6,10,-,-,2.5,172
+59,Goldelius,Ayatsugu_Otowa,3,6,10,-,13,2.5,172
 58,Midnight Party,BEN,1,5,8,-,-,2.5,125
 276,Glacial,BilliumMoto,1,5,9,-,14,3.13,129
 274,HDHR,BilliumMoto,3,4,10,-,-,3.13,135
@@ -43,6 +43,7 @@
 99,Teardrops,Cashew,2,4,9,12,-,3.2,140
 133,White Chocolate,Cashew,1,5,11,-,-,3.5,175
 246,Ocean,Cashew & Riyandi K,1,4,8,-,-,3.12,150
+306,Skrik,Chicala Lpis(Lactic Acid Bacteria),3,7,-,-,15,3.13,200
 57,Vengeance,ChouYawa,3,6,9,13,-,2.5,220
 85,Elph’s Sadness,Circle 2,3,6,8,-,-,3.1,180
 27,Gallium Arsenide,Circle 2,2,4,10,13,-,2.0,175
@@ -64,6 +65,7 @@
 179,Between Boundaries,DJ Counterforce,3,7,11,-,15,3.8,148
 186,Fabula Proelium Magna,DJ Counterforce,1,6,11,-,-,3.9,200
 20,Wonderful Days,DJ Mashiro,1,5,8,13,-,2.0,185
+304,Atomic Dropper,dotη,Ø,6,8,12,-,3.13,178
 266,Snowy Light,dotη,Ø,6,9,12,-,3.12,148
 298,Rudy,DusK with 化し目​,2,5,10,-,-,3.13,176
 155,Evils Was Coming,dwi kashiwagi,-,5,-,-,-,3.7,145
@@ -80,7 +82,7 @@
 203,Emulisy,Hidra-Xjeil,Ø,4,7,-,14,3.9,190
 258,Mechanismós ton Antikythíron,hurirai,Ø,5,10,-,14,3.12,240
 195,^/7(L⎥?[_(L+#<>+&⎥^(o),Hyphen,Ø,4,8,14,15,3.9,195
-199,Cross†Soul,HyuN feat. Syepias,2,6,8,-,-,3.9,200
+199,Cross†Soul,HyuN feat. Syepias,2,6,8,14,15,3.9,200
 103,GOEMON,ICBM,3,5,9,-,14,3.2,208
 205,曇る鑑《かがみ》の霧を含みて,Ino(chronoize),3,5,8,-,-,3.9,268
 247,Tronica and Fugue,Jehezukiel,3,5,7,12,-,3.12,142
@@ -88,7 +90,7 @@
 248,Canon in Blue,Jocaso,1,4,8,-,-,3.12,135
 254,Anökumene,Jun Kuroda,Ø,4,10,13,-,3.12,186
 230,Lily,Jun Kuroda,Ø,4,9,-,14,3.11,184
-118,AKI-ZAKURA,Jun Kuroda + はがね,2,5,9,14,-,3.4,175
+118,AKI-ZAKURA,Jun Kuroda + はがね,2,5,9,14,-,3.4,175
 174,天泣 -fracture-,Kamisys,2,7,Ø,11,-,3.8,180
 249,Nachtmusik,Kayobi,3,5,9,-,-,3.12,140
 69,Set Free -KIVΛ Edition-,KIVΛ,2,5,9,-,-,3.0,138
@@ -99,14 +101,17 @@
 108,Nanohemu,Kplecraft,2,7,10,14,-,3.3,180
 106,Okesuchi,Kplecraft,1,4,8,12,-,3.3,150
 136,DeaDLiNE,kRM,4,7,9,11,-,3.5,198
+289,オレンジ,kRM & 残響P,1,5,8,-,-,3.13,186
 183,Tunnelling,Kurorak,2,7,10,-,-,3.8,145
 142,Ace Sniper,Lactic Acid Bacteria,3,5,9,13,-,3.6,186
 271,CORONA,Lactic Acid Bacteria,1,6,10,-,-,3.12,188
 97,Trajectory,LegoLee,2,5,9,-,-,3.2,139
 33,流れ星に願うよいま...,Lemon whisper,2,4,8,-,-,2.1,128
+303,Glory of the Sacred Kingdom,Limstella,1,4,9,-,-,3.13,188
 264,Holy Lightbringer,Limstella,1,5,8,-,-,3.12,170
 76,Contour,litmus*,3,7,10,-,-,3.0,135
 110,Crank Up,litmus*,3,6,8,13,-,3.3,223
+300,Lonely Cat,litmus*,3,Ø,7,11,-,3.13,128
 67,Outer Space,litmus*,1,7,8,12,-,3.0,144
 79,Riverside Cafe,litmus*,1,5,9,-,-,3.0,192
 68,Another World,Lunatic Sounds,Ø,6,11,-,-,3.0,139
@@ -128,10 +133,10 @@
 56,龍舞,MInzu,2,6,8,-,-,2.4,135
 22,香港ノ奇術師,MInzu,1,7,10,12,-,2.0,200
 299,Jack Out KIllER,MisoilePunch♪ ～タケノコ添え～,4,6,9,14,15,3.13,173
-38,Black Horse Famine,MIssionary,3,6,10,13,-,2.2,160
-39,Grey Horse Underworld,MIssionary,3,7,9,13,-,2.2,186
-37,Red Horse Massacre,MIssionary,3,7,10,12,-,2.2,185
-36,White Horse Disease,MIssionary,3,6,8,12,-,2.2,190
+38,Black Horse Famine,MIssionary,3,6,10,13,15,2.2,160
+39,Grey Horse Underworld,MIssionary,3,7,9,13,15,2.2,186
+37,Red Horse Massacre,MIssionary,3,7,10,12,15,2.2,185
+36,White Horse Disease,MIssionary,3,6,8,12,14,2.2,190
 6,名無しの宣教師,MIssionary,2,6,7,13,-,1.0,195
 100,罪曲,MIssionary,3,6,10,11,-,3.2,190
 50,Libra,MIssionary vs Mimineko,2,6,11,13,-,2.4,196
@@ -145,17 +150,19 @@
 1,Stardust,mmry,1,4,8,13,-,1.0,130
 15,Variance,mmry,3,5,10,12,14,1.0,155
 40,Voyagers,mmry,2,5,9,-,-,2.2,126
-12,Axis,mmry & DCWH,3,5,9,-,-,1.0,130
+12,Axis,mmry & DCWH,3,5,9,13,-,1.0,130
 297,Sultan Madness,MonstDeath,Ø,5,7,13,-,3.13,182
 198,Hopeful Warrior,MonstDeath vs Glúteos,2,7,Ø,13,-,3.9,177
 139,Marion.net,MoonHare,Ø,4,7,11,-,3.5,190
 201,"Speedster, Trickster",Ms.+駄々子,2,4,9,-,-,3.9,179
 75,Danse De Romani,MUE,3,7,10,14,-,3.0,140
 82,Final Dash,MUE,1,5,10,13,-,3.0,170
+302,Hall of Fame,Mwk,2,Ø,8,12,-,3.13,174
 182,OCCHOCO-REST-LESS,MYUKKE.,Ø,5,8,13,14,3.8,135
 293,ROAD to 773H,MYUKKE.,2,6,9,-,-,3.13,220
 222,奏 -KANADE-,naccle,3,6,10,-,-,3.11,150
 251,白色の夢で。,Natunoruno (Senonlts),Ø,5,Ø,13,14,3.12,159
+301,At the peak,nay,1,5,9,-,-,3.13,130
 114,WORLDS CONNECT,NekomeP,3,6,9,-,-,3.4,128
 268,HYPER-NOVA,NeLiME,Ø,5,7,13,-,3.12,185
 196,Time & Space,Neutral Moon,3,6,Ø,12,-,3.9,175
@@ -199,7 +206,7 @@
 152,.reversive,SECTION,-,-,8,-,-,3.7,138
 190,The Endless for Traveler,Se-U-Ra,3,Ø,Ø,15,15,3.9,200
 284,哀しい竜とカイツール,Se-U-Ra,Ø,6,11,12,-,3.13,195
-24,Decomposition,Sihanatsuka,3,6,10,12,-,2.0,185
+24,Decomposition,Sihanatsuka,3,6,10,12,14,2.0,185
 105,Cryonix,sky_delta,Ø,7,10,13,15,3.2,184
 244,Grenade,sky_delta,Ø,6,8,13,-,3.11,181
 256,Kreuz,sky_delta,2,5,Ø,11,-,3.12,183
@@ -211,6 +218,7 @@
 281,HumaN,SOTUI,3,5,Ø,11,-,3.13,180
 200,BOUNCE THE TECH,Sound piercer vs. Iriss,3,Ø,8,-,15,3.9,154
 267,Dead Soul,Sound Souler,3,Ø,7,11,-,3.12,132
+307,Empty Stars,Sound Souler,1,5,10,-,-,3.13,180
 124,Soul Army,Sound Souler,2,Ø,8,13,-,3.4,128
 72,Invaded,Spyro Kong,Ø,6,9,12,-,3.0,145
 210,Termination,Spyro Kong,1,5,8,-,14,3.10,150
@@ -238,10 +246,11 @@
 28,Oracle,TQ☆,4,7,11,14,15,2.0,152
 62,つゆだま,TQ☆,2,6,10,-,-,2.6,144
 261,Eschatology,Trerey-U,Ø,4,7,13,-,3.12,190
-8,青坊,Trillion,3,4,9,-,-,1.0,132.5
+8,青坊,Trillion,3,4,9,13,-,1.0,132.5
 137,Triumph & Regret,typeMARS,Ø,7,10,12,-,3.5,175
 159,Utopia,typeMARS,-,-,9,-,-,3.7,150
 120,Hiccup Drunk,uddoudo,3,Ø,8,12,-,3.4,102
+308,Slyness Foxx,uddoudo,3,Ø,8,12,-,3.13,145
 172,Last farewell,Un vs. らせん,3,Ø,7,12,-,3.8,203
 73,Sandwich,UN1CODE,Ø,7,11,13,-,3.0,141
 45,パントマイム feat. IA,Utae,3,6,8,12,-,2.3,132
@@ -278,7 +287,6 @@
 166,Party Vinyl,モリモリあつし,2,6,9,13,-,3.8,132
 224,PUPA,モリモリあつし,3,7,10,14,15,3.11,202
 111,紅,モリモリあつし,Ø,7,10,-,15,3.3,208
-289,オレンジ,kRM & 残響P,1,5,8,-,-,3.13,186
 223,Lucentear,ペのれり,3,6,11,-,-,3.11,180
 283,Kokytos,しーけー,Ø,Ø,7,13,15,3.13,190
 296,Sky land,スコッティん,3,4,8,-,-,3.13,190
@@ -297,4 +305,5 @@
 280,おもひでファンタジア,梅こふ茶漬け,1,Ø,8,12,-,3.13,202
 101,Chrysoberyl,黑貓,Ø,6,10,14,-,3.2,192
 242,Mechanical Jäger,翡乃イスカ,Ø,4,7,11,-,3.11,150
+305,Faithtival,影翔鼓舞,3,6,11,11,14,3.13,190
 180,銀梅花,影翔鼓舞,2,Ø,9,14,-,3.8,190

@@ -5,6 +5,7 @@ from . import getDict
 
 arcaea_url_list = getDict.arcaea()
 cytus2_url_list = getDict.cytus2()
+lanota_url_list = getDict.lanota()
 
 def arcaea(input_df, level):
     df_temp = pd.DataFrame()
@@ -29,7 +30,7 @@ def arcaea(input_df, level):
         pst = str(df_temp['pst'])
         prs = str(df_temp['prs'])
         ftr = str(df_temp['ftr'])
-        diff = pst + " / " + prs + " / " + ftr
+        diff = " / ".join([pst, prs, ftr])
         output_arr.append(diff)
         output_arr.append(str(df_temp['len']))
         output_arr.append(str(df_temp['bpm']))
@@ -64,7 +65,7 @@ def cytus2(input_df, level):
         easy = str(df_temp['easy'])
         hard = str(df_temp['hard'])
         chaos = str(df_temp['chaos'])
-        diff = easy + " / " + hard + " / " + chaos
+        diff = " / ".join([easy, hard, chaos])
         output_arr.append(diff)
         try:
             length_temp = int(df_temp['len'])
@@ -85,7 +86,6 @@ def dynamix(input_df, level):
 
     if level == None:
         i = randint(1, len(input_df.index))
-        df_temp = pd.DataFrame()
         df_temp = input_df.iloc[i-1]
     else:
         try:
@@ -106,10 +106,46 @@ def dynamix(input_df, level):
         hard = str(df_temp['hard'])
         mega = str(df_temp['mega'])
         giga = str(df_temp['giga'])
-        diff = casual + " / " + normal + " / " + hard + " / " + mega + " / " + giga
+        diff = " / ".join([casual, normal, hard, mega, giga])
         output_arr.append(diff)
         output_arr.append(str(df_temp['bpm']))
         output_arr.append(df_temp['update'])
+
+        return output_arr
+    except:
+        return 0
+
+def lanota(input_df, level):
+    df_temp = pd.DataFrame()
+
+    if level == None:
+        i = randint(1, len(input_df.index))
+        df_temp = input_df.iloc[i-1]
+    else:
+        try:
+            df_temp = input_df.loc[(input_df['whisper'].isin([level])) | (input_df['acoustic'].isin([level])) | (input_df['ultra'].isin([level])) | (input_df['master'].isin([level]))]
+
+            i = randint(1, len(df_temp.index))
+            df_temp = df_temp.iloc[i-1]
+        except:
+            return 0
+
+    output_arr = []
+
+    try:
+        output_arr.append(df_temp['song'])
+        output_arr.append(df_temp['artist'])
+        whisper = str(df_temp['whisper'])
+        acoustic = str(df_temp['acoustic'])
+        ultra = str(df_temp['ultra'])
+        master = str(df_temp['master'])
+        diff = " / ".join([whisper, acoustic, ultra, master])
+        output_arr.append(diff)
+        output_arr.append(str(df_temp['length']))
+        output_arr.append(str(df_temp['bpm']))
+        output_arr.append(df_temp['chapter'])
+        output_arr.append(df_temp['area'])
+        output_arr.append(lanota_url_list[df_temp['chapter']])
 
         return output_arr
     except:
