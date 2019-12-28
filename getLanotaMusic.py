@@ -25,9 +25,9 @@ def process_data(inputData, chapterList):
 
     j = 0
     for input, chapter in zip(inputData, chapterList):
+        soup = BeautifulSoup(input, "html.parser")
+        
         if chapter == 'Chapter ∞':
-            soup = BeautifulSoup(input, "html.parser")
-
             i = 0
             arr = []
             for item in soup.find('table').findAll("td"):

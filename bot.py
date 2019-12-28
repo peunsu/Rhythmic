@@ -10,6 +10,7 @@ from tools import randomSong, getDict, getSongList
 arcaea_url_list = getDict.arcaea()
 cytus2_url_list = getDict.cytus2()
 lanota_url_list = getDict.lanota()
+deemo_url_list = getDict.deemo()
 err_msg = getDict.err()
 
 #Load Song Data
@@ -17,6 +18,7 @@ arcaea_df = pd.read_csv("data/arcaea.csv", encoding='utf-8-sig')
 cytus2_df = pd.read_csv("data/cytus2.csv", encoding='utf-8-sig')
 dynamix_df = pd.read_csv("data/dynamix.csv", encoding='utf-8-sig')
 lanota_df = pd.read_csv("data/lanota.csv", encoding='utf-8-sig')
+deemo_df = pd.read_csv("data/deemo.csv", encoding='utf-8-sig')
 
 #Bot Information
 client = commands.Bot(command_prefix='~')
@@ -44,12 +46,13 @@ async def ping(ctx):
 @client.command(pass_context=True)
 async def help(ctx):
     embed = discord.Embed(colour = discord.Colour.blue(), title="Rhythmic Command Help", description="Hello! I'm Rhythmic! Here is command list:")
-    embed.add_field(name = "ARCAEA", value="`arcaea [search]`: Search for Arcaea song info.", inline=False)
-    embed.add_field(name = "CYTUS 2", value="`cytus2 [search]`: Search for Cytus2 song info.", inline=False)
-    embed.add_field(name = "DYNAMIX", value="`dynamix [search]`: Search for Dynamix song info.", inline=False)
-    embed.add_field(name = "LANOTA", value="`lanota [search]`: Search for Lanota song info.", inline=False)
+    embed.add_field(name = "ARCAEA", value="`arcaea [search]`: Search for Arcaea song.", inline=True)
+    embed.add_field(name = "CYTUS 2", value="`cytus2 [search]`: Search for Cytus2 song.", inline=False)
+    embed.add_field(name = "DYNAMIX", value="`dynamix [search]`: Search for Dynamix song.", inline=True)
+    embed.add_field(name = "LANOTA", value="`lanota [search]`: Search for Lanota song.", inline=False)
+    embed.add_field(name = "DEEMO", value="`deemo [search]`: Search for Deemo song.", inline=False)
     embed.add_field(name = "RANDOM", value="`random [game_name] (level)`: Random Songs! LOL", inline=False)
-    embed.add_field(name = "SONG LIST", value="`songlist [game_name] [page_number]`: Get list of songs to your DM.")
+    embed.add_field(name = "SONG LIST", value="`songlist [game_name] [page_number]`: Get list of songs by DM.")
     embed.set_footer(text="Bot Made by Xestiny_")
 
     await ctx.send(embed=embed)
@@ -215,6 +218,44 @@ async def lanota(ctx, *, message):
         print("Lanota Song Info: No Result")
         print(e)
 
+#Lanota Search
+@client.command(pass_context=True)
+async def deemo(ctx, *, message):
+    df_temp = pd.DataFrame()
+
+    try:
+        for list in deemo_df.loc[:, 'song']:
+            ratio = SequenceMatcher(None, message, list.lower()).ratio()
+            if ratio >= 0.7:
+                df_temp = deemo_df.loc[deemo_df['song'] == list]
+
+        song = df_temp['song'].values[0]
+        artist = df_temp['artist'].values[0]
+        easy = str(df_temp['easy'].values[0])
+        normal = str(df_temp['normal'].values[0])
+        hard = str(df_temp['hard'].values[0])
+        extra = str(df_temp['extra'].values[0])
+        diff = " / ".join([easy, normal, hard, extra])
+        bpm = str(df_temp['bpm'].values[0])
+        collection = df_temp['collection'].values[0]
+
+        embed = discord.Embed(colour = discord.Colour.teal(), title="Deemo Song Info")
+        embed.add_field(name = "Song", value=song, inline=False)
+        embed.add_field(name = "Artist", value=artist, inline=False)
+        embed.add_field(name = "Difficulty", value=diff, inline=True)
+        embed.add_field(name = "BPM", value=bpm, inline=False)
+        embed.add_field(name = "Collection", value=collection, inline=True)
+
+        embed.set_thumbnail(url=deemo_url_list[collection])
+
+        await ctx.send(embed=embed)
+        print("Deemo Song Info: " + song)
+    except Exception as e:
+        embed = discord.Embed(colour = discord.Colour.red(), title="Deemo Song Info", description=err_msg['no_result'])
+        await ctx.send(embed=embed)
+        print("Deemo Song Info: No Result")
+        print(e)
+
 #Random Song
 @client.command(pass_context=True)
 async def random(ctx, *args):
@@ -324,6 +365,32 @@ async def random(ctx, *args):
                     embed = discord.Embed(colour = discord.Colour.red(), title="Random Song: Lanota", description=err_msg['value_error'])
                     await ctx.send(embed=embed)
                     print("Lanota Random: ValueError")
+
+            elif args[0].lower() == "deemo":
+                if len(args) == 1:
+                    temp = randomSong.deemo(deemo_df, None)
+                elif len(args) == 2:
+                    temp = randomSong.deemo(deemo_df, args[1])
+                else:
+                    raise IndexError
+
+                if temp != 0:
+                    embed = discord.Embed(colour = discord.Colour.teal(), title="Random Song: Deemo")
+                    embed.add_field(name = "Song", value=temp[0], inline=False)
+                    embed.add_field(name = "Artist", value=temp[1], inline=False)
+                    embed.add_field(name = "Difficulty", value=temp[2], inline=True)
+                    embed.add_field(name = "BPM", value=temp[3], inline=False)
+                    embed.add_field(name = "Collection", value=temp[4], inline=True)
+
+                    embed.set_thumbnail(url=temp[5])
+
+                    await ctx.send(embed=embed)
+                    print("Deemo Random: " + temp[0])
+                elif temp == 0:
+                    embed = discord.Embed(colour = discord.Colour.red(), title="Random Song: Deemo", description=err_msg['value_error'])
+                    await ctx.send(embed=embed)
+                    print("Deemo Random: ValueError")
+
             #If input is not existing game
             else:
                 embed = discord.Embed(colour = discord.Colour.red(), title="Random Song", description=err_msg['usage_random'])
@@ -377,6 +444,7 @@ async def songlist(ctx, *args):
                 embed = discord.Embed(colour = discord.Colour.red(), title="Dynamix Song List", description=err_msg['out_of_index'])
                 await ctx.send(embed=embed)
                 print("Dynamix Song List: Out of index")
+
         elif args[0].lower() == "lanota":
             temp = getSongList.getList(lanota_df, args[1], 3)
 
@@ -387,6 +455,18 @@ async def songlist(ctx, *args):
                 embed = discord.Embed(colour = discord.Colour.red(), title="Lanota Song List", description=err_msg['out_of_index'])
                 await ctx.send(embed=embed)
                 print("Lanota Song List: Out of index")
+
+        elif args[0].lower() == "deemo":
+            temp = getSongList.getList(deemo_df, args[1], 4)
+
+            if temp != 0:
+                await ctx.author.send(temp)
+                print("Deemo Song List: " + args[1])
+            elif temp == 0:
+                embed = discord.Embed(colour = discord.Colour.red(), title="Lanota Song List", description=err_msg['out_of_index'])
+                await ctx.send(embed=embed)
+                print("Deemo Song List: Out of index")
+
         #If input is not existing game
         else:
             embed = discord.Embed(colour = discord.Colour.red(), title="Song List", description=err_msg['usage_songlist'])

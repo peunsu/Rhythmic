@@ -35,6 +35,10 @@ def getList(input_df, loc, game):
                 arr.append(str(j) + ". " + df_temp.iloc[i, 0])
                 output = "\n".join(arr)
                 output_text = "```css\n[Lanota Song List (" + str(firstPage) + " of " + str(endPage) + ")]\n\n" + output + "\n```"
+            elif game == 4:
+                arr.append(str(j) + ". " + df_temp.iloc[i, 0])
+                output = "\n".join(arr)
+                output_text = "```css\n[Deemo Song List (" + str(firstPage) + " of " + str(endPage) + ")]\n\n" + output + "\n```"
 
         return output_text
     except:

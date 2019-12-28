@@ -6,6 +6,7 @@ from . import getDict
 arcaea_url_list = getDict.arcaea()
 cytus2_url_list = getDict.cytus2()
 lanota_url_list = getDict.lanota()
+deemo_url_list = getDict.deemo()
 
 def arcaea(input_df, level):
     df_temp = pd.DataFrame()
@@ -146,6 +147,40 @@ def lanota(input_df, level):
         output_arr.append(df_temp['chapter'])
         output_arr.append(df_temp['area'])
         output_arr.append(lanota_url_list[df_temp['chapter']])
+
+        return output_arr
+    except:
+        return 0
+
+def deemo(input_df, level):
+    df_temp = pd.DataFrame()
+
+    if level == None:
+        i = randint(1, len(input_df.index))
+        df_temp = input_df.iloc[i-1]
+    else:
+        try:
+            df_temp = input_df.loc[(input_df['easy'].isin([level])) | (input_df['normal'].isin([level])) | (input_df['hard'].isin([level])) | (input_df['extra'].isin([level]))]
+
+            i = randint(1, len(df_temp.index))
+            df_temp = df_temp.iloc[i-1]
+        except:
+            return 0
+
+    output_arr = []
+
+    try:
+        output_arr.append(df_temp['song'])
+        output_arr.append(df_temp['artist'])
+        easy = str(df_temp['easy'])
+        normal = str(df_temp['normal'])
+        hard = str(df_temp['hard'])
+        extra = str(df_temp['extra'])
+        diff = " / ".join([easy, normal, hard, extra])
+        output_arr.append(diff)
+        output_arr.append(str(df_temp['bpm']))
+        output_arr.append(df_temp['collection'])
+        output_arr.append(deemo_url_list[df_temp['collection']])
 
         return output_arr
     except:

@@ -16,7 +16,7 @@ Paff,SECRET;WEAPON,NOMA w/ Apo11o program ft.Yukacco,151,190,5,8,14
 Paff,Lilac for Anabel,Apo11o program ft.Mayumi Morinaga,141,145,4,7,13
 Paff,Who Am I?,Iris feat. Ruri Matsumura,169,147,2,6,10
 Paff,More Than Diamond,THE SxPLAY(菅原紗由理),130,126,2,5,9
-Paff,Blossoms for Life,Shi Kuang Lee & Pico & 林子玹,　　,120,3,7,11
+Paff,Blossoms for Life,Shi Kuang Lee & Pico & 林子玹,-,120,3,7,11
 Paff,Recall,Night Keepers,139,94,3,6,9
 Paff,So In Love,MK&Kanae Asaba,163,130,1,6,11
 Paff,Cityscape,Takashi OKAMOTO(12sound) feat. Tsukasa Shiraki,160,117,2,6,12
@@ -53,7 +53,7 @@ NEKO#ΦωΦ,Maboroshi,かめリあ(EDP),177,190,4,9,14
 NEKO#ΦωΦ,TOKONOMA Spacewalk,t+pazolite,144,160,3,7,12
 NEKO#ΦωΦ,UnNOT!CED,V!C,174,174,4,7,13
 NEKO#ΦωΦ,下水鳴動して鼠一匹,O-SE,139,168*,4,7,13
-NEKO#ΦωΦ,Capybara Kids' Paradise,Ice vs LunaticSounds,　　,235,6,9,15
+NEKO#ΦωΦ,Capybara Kids' Paradise,Ice vs LunaticSounds,-,235,6,9,15
 NEKO#ΦωΦ,Sdorica The Story Unfolds,Sdorica,123,180,2,5,10
 NEKO#ΦωΦ,Hesitant Blade,Sdorica,137,118,2,5,11
 ROBO_Head,Deadly Slot Game,提供,161,120,3,7,12
@@ -78,12 +78,12 @@ ROBO_Head,cold,Noizenecio,126,190,4,7,12
 ROBO_Head,NRG_Tech,3R2,132,158,4,7,13
 ROBO_Head,Break Through the Barrier,lixound,135,176,4,8,14
 ROBO_Head,Dead Master,Neutral Moon,132,175,3,9,13
-ROBO_Head,Accelerator,Massive New Krew,　　,150,2,7,13
-ROBO_Head,Armaros,Dj Grimoire,　　,185,3,8,13
-ROBO_Head,Break The Core,PTB10,　　,160,4,9,14
-ROBO_Head,Milky Way Galaxy (SIHanatsuka Remix),3R2,　　,175,4,8,13
-ROBO_Head,ViRUS,Deepshout,　　,150,3,8,12
-ROBO_Head,Awakening,DiagonalT,　　,138,2,5,10
+ROBO_Head,Accelerator,Massive New Krew,-,150,2,7,13
+ROBO_Head,Armaros,Dj Grimoire,-,185,3,8,13
+ROBO_Head,Break The Core,PTB10,-,160,4,9,14
+ROBO_Head,Milky Way Galaxy (SIHanatsuka Remix),3R2,-,175,4,8,13
+ROBO_Head,ViRUS,Deepshout,-,150,3,8,12
+ROBO_Head,Awakening,DiagonalT,-,138,2,5,10
 ROBO_Head,Hagiasmos,Iris,165,150,5,7,12
 Ivy,Reset,SIHanatsuka,155,190,3,7,12
 Ivy,D R G,onoken,121,155,2,6,11
