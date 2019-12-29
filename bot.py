@@ -53,7 +53,7 @@ async def help(ctx):
     embed.add_field(name = "DEEMO", value="`deemo [search]`: Search for Deemo song.", inline=True)
     embed.add_field(name = "RANDOM", value="`random [game_name] (level)`: Random Songs! LOL", inline=False)
     embed.add_field(name = "SONG LIST", value="`songlist [game_name] [page_number]`: Get list of songs by DM.", inline=False)
-    embed.add_field(name = "PROBER", value="`probe [userid]`: Probe user info.\n`probeall [userid] [page_number]`: Probe detailed Arcaea score info.\n`probeall [userid] refresh`: Refresh Arcaea score info.", inline=False)
+    embed.add_field(name = "PROBER", value="`probe [userid]`: Probe Arcaea user info.\n`probeall [userid] [page_number]`: Probe detailed Arcaea score info.\n`probeall [userid] refresh`: Refresh Arcaea score info.", inline=False)
     embed.set_footer(text="Bot Made by Xestiny_")
 
     await ctx.send(embed=embed)
