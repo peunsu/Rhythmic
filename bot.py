@@ -4,7 +4,7 @@ from discord.ext import commands
 import pandas as pd
 import numpy as np
 from difflib import SequenceMatcher
-from tools import randomSong, getDict, getSongList
+from tools import randomSong, getDict, getSongList, arcaeaProber, getProbeDetail
 
 #Load URL
 arcaea_url_list = getDict.arcaea()
@@ -47,15 +47,93 @@ async def ping(ctx):
 async def help(ctx):
     embed = discord.Embed(colour = discord.Colour.blue(), title="Rhythmic Command Help", description="Hello! I'm Rhythmic! Here is command list:")
     embed.add_field(name = "ARCAEA", value="`arcaea [search]`: Search for Arcaea song.", inline=True)
-    embed.add_field(name = "CYTUS 2", value="`cytus2 [search]`: Search for Cytus2 song.", inline=False)
+    embed.add_field(name = "CYTUS 2", value="`cytus2 [search]`: Search for Cytus2 song.", inline=True)
     embed.add_field(name = "DYNAMIX", value="`dynamix [search]`: Search for Dynamix song.", inline=True)
-    embed.add_field(name = "LANOTA", value="`lanota [search]`: Search for Lanota song.", inline=False)
-    embed.add_field(name = "DEEMO", value="`deemo [search]`: Search for Deemo song.", inline=False)
+    embed.add_field(name = "LANOTA", value="`lanota [search]`: Search for Lanota song.", inline=True)
+    embed.add_field(name = "DEEMO", value="`deemo [search]`: Search for Deemo song.", inline=True)
     embed.add_field(name = "RANDOM", value="`random [game_name] (level)`: Random Songs! LOL", inline=False)
-    embed.add_field(name = "SONG LIST", value="`songlist [game_name] [page_number]`: Get list of songs by DM.")
+    embed.add_field(name = "SONG LIST", value="`songlist [game_name] [page_number]`: Get list of songs by DM.", inline=False)
+    embed.add_field(name = "PROBER", value="`probe [userid]`: Probe user info.\n`probeall [userid] [page_number]`: Probe detailed Arcaea score info.\n`probeall [userid] refresh`: Refresh Arcaea score info.", inline=False)
     embed.set_footer(text="Bot Made by Xestiny_")
 
     await ctx.send(embed=embed)
+
+@client.command(pass_context=True)
+async def probe(ctx, *args):
+    try:
+        if len(args[0]) == 9 and args[0].isdecimal():
+            if len(args) == 1:
+                embed = discord.Embed(colour = discord.Colour.purple(), title="Arcaea Prober", description="Please wait a few seconds...")
+                await ctx.send(embed=embed)
+
+                username, register, ptt, img = await arcaeaProber.arcaea_prober(uid=args[0])
+
+                if register == 0:
+                    embed = discord.Embed(colour = discord.Colour.red(), title="Arcaea Prober", description=err_msg['no_uid'])
+                    await ctx.send(embed=embed)
+                    print("Arcaea Prober: Wrong UID")
+                else:
+                    embed = discord.Embed(colour = discord.Colour.purple(), title="Arcaea Prober")
+                    embed.add_field(name = "Username", value=username, inline=False)
+                    embed.add_field(name = "Register Date", value=register, inline=False)
+                    embed.add_field(name = "Potential", value=ptt, inline=False)
+                    embed.set_thumbnail(url=img)
+                    embed.set_footer(text="UID: " + str(args[0]))
+                    await ctx.send(embed=embed)
+            else:
+                embed = discord.Embed(colour = discord.Colour.red(), title="Arcaea Prober", description=err_msg['usage_prober'])
+                await ctx.send(embed=embed)
+                print("Arcaea Prober: Argument Error")
+        else:
+            embed = discord.Embed(colour = discord.Colour.red(), title="Arcaea Prober", description=err_msg['no_uid'])
+            await ctx.send(embed=embed)
+            print("Arcaea Prober: Wrong UID")
+    except:
+        embed = discord.Embed(colour = discord.Colour.red(), title="Arcaea Prober", description=err_msg['usage_prober'])
+        await ctx.send(embed=embed)
+        print("Arcaea Prober: Argument Error")
+
+@client.command(pass_context=True)
+async def probeall(ctx, *args):
+    if len(args) == 2:
+        if args[1].lower() == "refresh":
+            embed = discord.Embed(colour = discord.Colour.purple(), title="Arcaea Prober", description="Please wait a few seconds...")
+            await ctx.send(embed=embed)
+
+            username, register, ptt, img = await arcaeaProber.arcaea_prober_all(uid=args[0])
+
+            if register == 0:
+                embed = discord.Embed(colour = discord.Colour.red(), title="Arcaea Prober", description=err_msg['no_uid'])
+                await ctx.send(embed=embed)
+                print("Arcaea Prober: Wrong UID")
+            else:
+                embed = discord.Embed(colour = discord.Colour.purple(), title="Arcaea Prober", description="Refresh Complete.")
+                await ctx.send(embed=embed)
+                print("Arcaea Prober: Refresh")
+        else:
+            embed = discord.Embed(colour = discord.Colour.purple(), title="Arcaea Prober", description="Please wait a few seconds...")
+            await ctx.send(embed=embed)
+
+            username, register, ptt, img = await arcaeaProber.arcaea_prober(uid=args[0])
+
+            if register == 0:
+                embed = discord.Embed(colour = discord.Colour.red(), title="Arcaea Prober", description=err_msg['no_uid'])
+                await ctx.send(embed=embed)
+                print("Arcaea Prober: Wrong UID")
+            else:
+                temp = getProbeDetail.getProbeDetail(username, args[1])
+
+                if temp != 0:
+                    await ctx.author.send(temp)
+                    print("Arcaea Prober: " + args[0])
+                elif temp == 0:
+                    embed = discord.Embed(colour = discord.Colour.red(), title="Arcaea Prober", description=err_msg['out_of_index'])
+                    await ctx.send(embed=embed)
+                    print("Arcaea Prober: Out of index")
+    else:
+        embed = discord.Embed(colour = discord.Colour.red(), title="Arcaea Prober", description=err_msg['usage_prober_all'])
+        await ctx.send(embed=embed)
+        print("Arcaea Prober: Argument Error")
 
 #Arcaea Search
 @client.command(pass_context=True)
@@ -63,10 +141,13 @@ async def arcaea(ctx, *, message):
     df_temp = pd.DataFrame()
 
     try:
+        top_ratio = 0.0
         for list in arcaea_df.loc[:, 'song']:
             ratio = SequenceMatcher(None, message, list.lower()).ratio()
-            if ratio >= 0.7:
-                df_temp = arcaea_df.loc[arcaea_df['song'] == list]
+            if ratio >= 0.3:
+                if ratio >= top_ratio:
+                    top_ratio = ratio
+                    df_temp = arcaea_df.loc[arcaea_df['song'] == list]
 
         song = df_temp['song'].values[0]
         artist = df_temp['artist'].values[0]
@@ -104,10 +185,13 @@ async def cytus2(ctx, *, message):
     df_temp = pd.DataFrame()
 
     try:
+        top_ratio = 0.0
         for list in cytus2_df.loc[:, 'song']:
             ratio = SequenceMatcher(None, message, list.lower()).ratio()
-            if ratio >= 0.7:
-                df_temp = cytus2_df.loc[cytus2_df['song'] == list]
+            if ratio >= 0.3:
+                if ratio >= top_ratio:
+                    top_ratio = ratio
+                    df_temp = cytus2_df.loc[cytus2_df['song'] == list]
 
         song = df_temp['song'].values[0]
         artist = df_temp['artist'].values[0]
@@ -147,10 +231,13 @@ async def dynamix(ctx, *, message):
     df_temp = pd.DataFrame()
 
     try:
+        top_ratio = 0.0
         for list in dynamix_df.loc[:, 'song']:
             ratio = SequenceMatcher(None, message, list.lower()).ratio()
-            if ratio >= 0.7:
-                df_temp = dynamix_df.loc[dynamix_df['song'] == list]
+            if ratio >= 0.3:
+                if ratio >= top_ratio:
+                    top_ratio = ratio
+                    df_temp = dynamix_df.loc[dynamix_df['song'] == list]
 
         song = df_temp['song'].values[0]
         artist = df_temp['artist'].values[0]
@@ -182,10 +269,13 @@ async def lanota(ctx, *, message):
     df_temp = pd.DataFrame()
 
     try:
+        top_ratio = 0.0
         for list in lanota_df.loc[:, 'song']:
             ratio = SequenceMatcher(None, message, list.lower()).ratio()
-            if ratio >= 0.7:
-                df_temp = lanota_df.loc[lanota_df['song'] == list]
+            if ratio >= 0.3:
+                if ratio >= top_ratio:
+                    top_ratio = ratio
+                    df_temp = lanota_df.loc[lanota_df['song'] == list]
 
         song = df_temp['song'].values[0]
         artist = df_temp['artist'].values[0]
@@ -224,10 +314,13 @@ async def deemo(ctx, *, message):
     df_temp = pd.DataFrame()
 
     try:
+        top_ratio = 0.0
         for list in deemo_df.loc[:, 'song']:
             ratio = SequenceMatcher(None, message, list.lower()).ratio()
-            if ratio >= 0.7:
-                df_temp = deemo_df.loc[deemo_df['song'] == list]
+            if ratio >= 0.3:
+                if ratio >= top_ratio:
+                    top_ratio = ratio
+                    df_temp = deemo_df.loc[deemo_df['song'] == list]
 
         song = df_temp['song'].values[0]
         artist = df_temp['artist'].values[0]
@@ -243,8 +336,8 @@ async def deemo(ctx, *, message):
         embed.add_field(name = "Song", value=song, inline=False)
         embed.add_field(name = "Artist", value=artist, inline=False)
         embed.add_field(name = "Difficulty", value=diff, inline=True)
-        embed.add_field(name = "BPM", value=bpm, inline=False)
-        embed.add_field(name = "Collection", value=collection, inline=True)
+        embed.add_field(name = "BPM", value=bpm, inline=True)
+        embed.add_field(name = "Collection", value=collection, inline=False)
 
         embed.set_thumbnail(url=deemo_url_list[collection])
 
@@ -379,8 +472,8 @@ async def random(ctx, *args):
                     embed.add_field(name = "Song", value=temp[0], inline=False)
                     embed.add_field(name = "Artist", value=temp[1], inline=False)
                     embed.add_field(name = "Difficulty", value=temp[2], inline=True)
-                    embed.add_field(name = "BPM", value=temp[3], inline=False)
-                    embed.add_field(name = "Collection", value=temp[4], inline=True)
+                    embed.add_field(name = "BPM", value=temp[3], inline=True)
+                    embed.add_field(name = "Collection", value=temp[4], inline=False)
 
                     embed.set_thumbnail(url=temp[5])
 

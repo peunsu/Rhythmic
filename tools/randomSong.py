@@ -20,7 +20,8 @@ def arcaea(input_df, level):
 
             i = randint(1, len(df_temp.index))
             df_temp = df_temp.iloc[i-1]
-        except:
+        except Exception as e:
+            print(e)
             return 0
 
     output_arr = []
@@ -40,7 +41,8 @@ def arcaea(input_df, level):
         output_arr.append(arcaea_url_list[df_temp['pack']])
 
         return output_arr
-    except:
+    except Exception as e:
+        print(e)
         return 0
 
 def cytus2(input_df, level):
@@ -55,7 +57,8 @@ def cytus2(input_df, level):
 
             i = randint(1, len(df_temp.index))
             df_temp = df_temp.iloc[i-1]
-        except:
+        except Exception as e:
+            print(e)
             return 0
 
     output_arr = []
@@ -79,7 +82,8 @@ def cytus2(input_df, level):
         output_arr.append(cytus2_url_list[df_temp['character']])
 
         return output_arr
-    except:
+    except Exception as e:
+        print(e)
         return 0
 
 def dynamix(input_df, level):
@@ -94,7 +98,8 @@ def dynamix(input_df, level):
 
             i = randint(1, len(df_temp.index))
             df_temp = df_temp.iloc[i-1]
-        except:
+        except Exception as e:
+            print(e)
             return 0
 
     output_arr = []
@@ -113,7 +118,8 @@ def dynamix(input_df, level):
         output_arr.append(df_temp['update'])
 
         return output_arr
-    except:
+    except Exception as e:
+        print(e)
         return 0
 
 def lanota(input_df, level):
@@ -128,7 +134,8 @@ def lanota(input_df, level):
 
             i = randint(1, len(df_temp.index))
             df_temp = df_temp.iloc[i-1]
-        except:
+        except Exception as e:
+            print(e)
             return 0
 
     output_arr = []
@@ -149,7 +156,8 @@ def lanota(input_df, level):
         output_arr.append(lanota_url_list[df_temp['chapter']])
 
         return output_arr
-    except:
+    except Exception as e:
+        print(e)
         return 0
 
 def deemo(input_df, level):
@@ -164,7 +172,8 @@ def deemo(input_df, level):
 
             i = randint(1, len(df_temp.index))
             df_temp = df_temp.iloc[i-1]
-        except:
+        except Exception as e:
+            print(e)
             return 0
 
     output_arr = []
@@ -183,5 +192,6 @@ def deemo(input_df, level):
         output_arr.append(deemo_url_list[df_temp['collection']])
 
         return output_arr
-    except:
+    except Exception as e:
+        print(e)
         return 0

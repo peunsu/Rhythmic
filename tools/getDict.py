@@ -191,7 +191,10 @@ err_msg = {
     'out_of_index': "Out of index. Type existing list number.",
     'value_error': "Type existing level.",
     'usage_random': "Usage: random [arcaea/cytus2/dynamix/lanota/deemo] (level)",
-    'usage_songlist': "Usage: songlist [arcaea/cytus2/dynamix/lanota/deemo] [listnumber]"
+    'usage_songlist': "Usage: songlist [arcaea/cytus2/dynamix/lanota/deemo] [page_number]",
+    'no_uid': "Not vaild user ID. Please type correct user ID.",
+    'usage_prober': "Usage: probe [uid]",
+    'usage_prober_all': "Usage:\nProbe: probeall [uid] [page_number]\nRefresh: probeall [uid] refresh"
     }
 
 def arcaea():
