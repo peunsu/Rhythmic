@@ -19,6 +19,8 @@ cytus2_df = pd.read_csv("data/cytus2.csv", encoding='utf-8-sig')
 dynamix_df = pd.read_csv("data/dynamix.csv", encoding='utf-8-sig')
 lanota_df = pd.read_csv("data/lanota.csv", encoding='utf-8-sig')
 deemo_df = pd.read_csv("data/deemo.csv", encoding='utf-8-sig')
+voez_df = pd.read_csv("data/voez.csv", encoding='utf-8-sig')
+phigros_df = pd.read_csv("data/phigros.csv", encoding='utf-8-sig')
 
 #Bot Information
 client = commands.Bot(command_prefix='~')
@@ -46,20 +48,17 @@ async def ping(ctx):
 @client.command(pass_context=True)
 async def help(ctx):
     embed = discord.Embed(colour = discord.Colour.blue(), title="Rhythmic Command Help", description="Hello! I'm Rhythmic! Here is command list:")
-    embed.add_field(name = "ARCAEA", value="`arcaea [search]`: Search for Arcaea song.", inline=True)
-    embed.add_field(name = "CYTUS 2", value="`cytus2 [search]`: Search for Cytus2 song.", inline=True)
-    embed.add_field(name = "DYNAMIX", value="`dynamix [search]`: Search for Dynamix song.", inline=True)
-    embed.add_field(name = "LANOTA", value="`lanota [search]`: Search for Lanota song.", inline=True)
-    embed.add_field(name = "DEEMO", value="`deemo [search]`: Search for Deemo song.", inline=True)
+    embed.add_field(name = "SEARCH", value="`arcaea [search]`: Search for Arcaea song.\n`cytus2 [search]`: Search for Cytus2 song.\n`dynamix [search]`: Search for Dynamix song.\n`lanota [search]`: Search for Lanota song.\n`deemo [search]`: Search for Deemo song.\n`voez [search]`: Search for VOEZ song.\n`phigros [search]`: Search for Phigros song.", inline=False)
     embed.add_field(name = "RANDOM", value="`random [game_name] (level)`: Random Songs! LOL", inline=False)
     embed.add_field(name = "SONG LIST", value="`songlist [game_name] [page_number]`: Get list of songs by DM.", inline=False)
-    embed.add_field(name = "PROBER", value="`probe [userid]`: Probe Arcaea user info.\n`probeall [userid] [page_number]`: Probe detailed Arcaea score info.\n`probeall [userid] refresh`: Refresh Arcaea score info.", inline=False)
+    embed.add_field(name = "ARCAEA PROBER", value="`probeuser [userid]`: Probe Arcaea user info.\n`probescore [userid] [page_number]`: Probe Arcaea score info. Refresh first.\n`probescore [userid] refresh`: Refresh Arcaea score info.", inline=False)
     embed.set_footer(text="Bot Made by Xestiny_")
 
     await ctx.send(embed=embed)
 
+#Probe Arcaea User Info
 @client.command(pass_context=True)
-async def probe(ctx, *args):
+async def probeuser(ctx, *args):
     try:
         if len(args[0]) == 9 and args[0].isdecimal():
             if len(args) == 1:
@@ -93,43 +92,49 @@ async def probe(ctx, *args):
         await ctx.send(embed=embed)
         print("Arcaea Prober: Argument Error")
 
+#Probe Arcaea Score Info
 @client.command(pass_context=True)
-async def probeall(ctx, *args):
+async def probescore(ctx, *args):
     if len(args) == 2:
-        if args[1].lower() == "refresh":
-            embed = discord.Embed(colour = discord.Colour.purple(), title="Arcaea Prober", description="Please wait a few seconds...")
-            await ctx.send(embed=embed)
-
-            username, register, ptt, img = await arcaeaProber.arcaea_prober_all(uid=args[0])
-
-            if register == 0:
-                embed = discord.Embed(colour = discord.Colour.red(), title="Arcaea Prober", description=err_msg['no_uid'])
+        if len(args[0]) == 9 and args[0].isdecimal():
+            if args[1].lower() == "refresh":
+                embed = discord.Embed(colour = discord.Colour.purple(), title="Arcaea Prober", description="Please wait a few seconds...")
                 await ctx.send(embed=embed)
-                print("Arcaea Prober: Wrong UID")
-            else:
-                embed = discord.Embed(colour = discord.Colour.purple(), title="Arcaea Prober", description="Refresh Complete.")
-                await ctx.send(embed=embed)
-                print("Arcaea Prober: Refresh")
-        else:
-            embed = discord.Embed(colour = discord.Colour.purple(), title="Arcaea Prober", description="Please wait a few seconds...")
-            await ctx.send(embed=embed)
 
-            username, register, ptt, img = await arcaeaProber.arcaea_prober(uid=args[0])
+                username, register, ptt, img = await arcaeaProber.arcaea_prober_all(uid=args[0])
 
-            if register == 0:
-                embed = discord.Embed(colour = discord.Colour.red(), title="Arcaea Prober", description=err_msg['no_uid'])
-                await ctx.send(embed=embed)
-                print("Arcaea Prober: Wrong UID")
-            else:
-                temp = getProbeDetail.getProbeDetail(username, args[1])
-
-                if temp != 0:
-                    await ctx.author.send(temp)
-                    print("Arcaea Prober: " + args[0])
-                elif temp == 0:
-                    embed = discord.Embed(colour = discord.Colour.red(), title="Arcaea Prober", description=err_msg['out_of_index'])
+                if register == 0:
+                    embed = discord.Embed(colour = discord.Colour.red(), title="Arcaea Prober", description=err_msg['no_uid'])
                     await ctx.send(embed=embed)
-                    print("Arcaea Prober: Out of index")
+                    print("Arcaea Prober: Wrong UID")
+                else:
+                    embed = discord.Embed(colour = discord.Colour.purple(), title="Arcaea Prober", description="Refresh Complete.")
+                    await ctx.send(embed=embed)
+                    print("Arcaea Prober: Refresh")
+            else:
+                embed = discord.Embed(colour = discord.Colour.purple(), title="Arcaea Prober", description="Please wait a few seconds...")
+                await ctx.send(embed=embed)
+
+                username, register, ptt, img = await arcaeaProber.arcaea_prober(uid=args[0])
+
+                if register == 0:
+                    embed = discord.Embed(colour = discord.Colour.red(), title="Arcaea Prober", description=err_msg['no_uid'])
+                    await ctx.send(embed=embed)
+                    print("Arcaea Prober: Wrong UID")
+                else:
+                    temp = getProbeDetail.getProbeDetail(username, args[1])
+
+                    if temp != 0:
+                        await ctx.author.send(temp)
+                        print("Arcaea Prober: " + args[0])
+                    elif temp == 0:
+                        embed = discord.Embed(colour = discord.Colour.red(), title="Arcaea Prober", description=err_msg['out_of_index'])
+                        await ctx.send(embed=embed)
+                        print("Arcaea Prober: Out of index")
+        else:
+            embed = discord.Embed(colour = discord.Colour.red(), title="Arcaea Prober", description=err_msg['no_uid'])
+            await ctx.send(embed=embed)
+            print("Arcaea Prober: Wrong UID")
     else:
         embed = discord.Embed(colour = discord.Colour.red(), title="Arcaea Prober", description=err_msg['usage_prober_all'])
         await ctx.send(embed=embed)
@@ -349,6 +354,79 @@ async def deemo(ctx, *, message):
         print("Deemo Song Info: No Result")
         print(e)
 
+#VOEZ Search
+@client.command(pass_context=True)
+async def voez(ctx, *, message):
+    df_temp = pd.DataFrame()
+
+    try:
+        top_ratio = 0.0
+        for list in voez_df.loc[:, 'song']:
+            ratio = SequenceMatcher(None, message, list.lower()).ratio()
+            if ratio >= 0.3:
+                if ratio >= top_ratio:
+                    top_ratio = ratio
+                    df_temp = voez_df.loc[voez_df['song'] == list]
+
+        song = df_temp['song'].values[0]
+        artist = df_temp['artist'].values[0]
+        easy = str(df_temp['easy'].values[0])
+        hard = str(df_temp['hard'].values[0])
+        special = str(df_temp['special'].values[0])
+        diff = " / ".join([easy, hard, special])
+        bpm = str(df_temp['bpm'].values[0])
+
+        embed = discord.Embed(colour = discord.Colour.blue(), title="VOEZ Song Info")
+        embed.add_field(name = "Song", value=song, inline=False)
+        embed.add_field(name = "Artist", value=artist, inline=False)
+        embed.add_field(name = "Difficulty", value=diff, inline=True)
+        embed.add_field(name = "BPM", value=bpm, inline=True)
+
+        await ctx.send(embed=embed)
+        print("VOEZ Song Info: " + song)
+    except Exception as e:
+        embed = discord.Embed(colour = discord.Colour.red(), title="VOEZ Song Info", description=err_msg['no_result'])
+        await ctx.send(embed=embed)
+        print("VOEZ Song Info: No Result")
+        print(e)
+
+#Phigros Search
+@client.command(pass_context=True)
+async def phigros(ctx, *, message):
+    df_temp = pd.DataFrame()
+
+    try:
+        top_ratio = 0.0
+        for list in phigros_df.loc[:, 'song']:
+            ratio = SequenceMatcher(None, message, list.lower()).ratio()
+            if ratio >= 0.3:
+                if ratio >= top_ratio:
+                    top_ratio = ratio
+                    df_temp = phigros_df.loc[phigros_df['song'] == list]
+
+        song = df_temp['song'].values[0]
+        artist = df_temp['artist'].values[0]
+        ez = str(df_temp['ez'].values[0])
+        hd = str(df_temp['hd'].values[0])
+        ins = str(df_temp['in'].values[0])
+        sp = str(df_temp['sp'].values[0])
+        diff = " / ".join([ez, hd, ins, sp])
+        len = str(df_temp['len'].values[0])
+
+        embed = discord.Embed(colour = discord.Colour.orange(), title="Phigros Song Info")
+        embed.add_field(name = "Song", value=song, inline=False)
+        embed.add_field(name = "Artist", value=artist, inline=False)
+        embed.add_field(name = "Difficulty", value=diff, inline=True)
+        embed.add_field(name = "Length", value=len, inline=True)
+
+        await ctx.send(embed=embed)
+        print("Phigros Song Info: " + song)
+    except Exception as e:
+        embed = discord.Embed(colour = discord.Colour.red(), title="Phigros Song Info", description=err_msg['no_result'])
+        await ctx.send(embed=embed)
+        print("Phigros Song Info: No Result")
+        print(e)
+
 #Random Song
 @client.command(pass_context=True)
 async def random(ctx, *args):
@@ -484,6 +562,50 @@ async def random(ctx, *args):
                     await ctx.send(embed=embed)
                     print("Deemo Random: ValueError")
 
+            elif args[0].lower() == "voez":
+                if len(args) == 1:
+                    temp = randomSong.voez(voez_df, None)
+                elif len(args) == 2:
+                    temp = randomSong.voez(voez_df, args[1])
+                else:
+                    raise IndexError
+
+                if temp != 0:
+                    embed = discord.Embed(colour = discord.Colour.blue(), title="Random Song: VOEZ")
+                    embed.add_field(name = "Song", value=temp[0], inline=False)
+                    embed.add_field(name = "Artist", value=temp[1], inline=False)
+                    embed.add_field(name = "Difficulty", value=temp[2], inline=True)
+                    embed.add_field(name = "BPM", value=temp[3], inline=True)
+
+                    await ctx.send(embed=embed)
+                    print("VOEZ Random: " + temp[0])
+                elif temp == 0:
+                    embed = discord.Embed(colour = discord.Colour.red(), title="Random Song: VOEZ", description=err_msg['value_error'])
+                    await ctx.send(embed=embed)
+                    print("VOEZ Random: ValueError")
+
+            elif args[0].lower() == "phigros":
+                if len(args) == 1:
+                    temp = randomSong.phigros(phigros_df, None)
+                elif len(args) == 2:
+                    temp = randomSong.phigros(phigros_df, args[1])
+                else:
+                    raise IndexError
+
+                if temp != 0:
+                    embed = discord.Embed(colour = discord.Colour.blue(), title="Random Song: Phigros")
+                    embed.add_field(name = "Song", value=temp[0], inline=False)
+                    embed.add_field(name = "Artist", value=temp[1], inline=False)
+                    embed.add_field(name = "Difficulty", value=temp[2], inline=True)
+                    embed.add_field(name = "Length", value=temp[3], inline=True)
+
+                    await ctx.send(embed=embed)
+                    print("Phigros Random: " + temp[0])
+                elif temp == 0:
+                    embed = discord.Embed(colour = discord.Colour.red(), title="Random Song: Phigros", description=err_msg['value_error'])
+                    await ctx.send(embed=embed)
+                    print("Phigros Random: ValueError")
+
             #If input is not existing game
             else:
                 embed = discord.Embed(colour = discord.Colour.red(), title="Random Song", description=err_msg['usage_random'])
@@ -556,9 +678,31 @@ async def songlist(ctx, *args):
                 await ctx.author.send(temp)
                 print("Deemo Song List: " + args[1])
             elif temp == 0:
-                embed = discord.Embed(colour = discord.Colour.red(), title="Lanota Song List", description=err_msg['out_of_index'])
+                embed = discord.Embed(colour = discord.Colour.red(), title="Deemo Song List", description=err_msg['out_of_index'])
                 await ctx.send(embed=embed)
                 print("Deemo Song List: Out of index")
+
+        elif args[0].lower() == "voez":
+            temp = getSongList.getList(voez_df, args[1], 5)
+
+            if temp != 0:
+                await ctx.author.send(temp)
+                print("VOEZ Song List: " + args[1])
+            elif temp == 0:
+                embed = discord.Embed(colour = discord.Colour.red(), title="VOEZ Song List", description=err_msg['out_of_index'])
+                await ctx.send(embed=embed)
+                print("VOEZ Song List: Out of index")
+
+        elif args[0].lower() == "phigros":
+            temp = getSongList.getList(phigros_df, args[1], 6)
+
+            if temp != 0:
+                await ctx.author.send(temp)
+                print("Phigros Song List: " + args[1])
+            elif temp == 0:
+                embed = discord.Embed(colour = discord.Colour.red(), title="Phigros Song List", description=err_msg['out_of_index'])
+                await ctx.send(embed=embed)
+                print("Phigros Song List: Out of index")
 
         #If input is not existing game
         else:

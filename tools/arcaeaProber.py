@@ -73,7 +73,7 @@ async def arcaea_prober_all(session, uid):
         img = soup.select('#user-info > img')[0]['src']
         img = "https://redive.estertion.win/arcaea" + img[2:]
 
-        await asyncio.sleep(7.0)
+        await asyncio.sleep(6.0)
         await export.click()
 
         doFileExist = False

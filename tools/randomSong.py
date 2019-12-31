@@ -195,3 +195,70 @@ def deemo(input_df, level):
     except Exception as e:
         print(e)
         return 0
+
+def voez(input_df, level):
+    df_temp = pd.DataFrame()
+
+    if level == None:
+        i = randint(1, len(input_df.index))
+        df_temp = input_df.iloc[i-1]
+    else:
+        try:
+            df_temp = input_df.loc[(input_df['easy'].isin([level])) | (input_df['hard'].isin([level])) | (input_df['special'].isin([level]))]
+
+            i = randint(1, len(df_temp.index))
+            df_temp = df_temp.iloc[i-1]
+        except Exception as e:
+            print(e)
+            return 0
+
+    output_arr = []
+
+    try:
+        output_arr.append(df_temp['song'])
+        output_arr.append(df_temp['artist'])
+        easy = str(df_temp['easy'])
+        hard = str(df_temp['hard'])
+        special = str(df_temp['special'])
+        diff = " / ".join([easy, hard, special])
+        output_arr.append(diff)
+        output_arr.append(str(df_temp['bpm']))
+
+        return output_arr
+    except Exception as e:
+        print(e)
+        return 0
+
+def phigros(input_df, level):
+    df_temp = pd.DataFrame()
+
+    if level == None:
+        i = randint(1, len(input_df.index))
+        df_temp = input_df.iloc[i-1]
+    else:
+        try:
+            df_temp = input_df.loc[(input_df['ez'].isin([level])) | (input_df['hd'].isin([level])) | (input_df['in'].isin([level])) | (input_df['sp'].isin([level]))]
+
+            i = randint(1, len(df_temp.index))
+            df_temp = df_temp.iloc[i-1]
+        except Exception as e:
+            print(e)
+            return 0
+
+    output_arr = []
+
+    try:
+        output_arr.append(df_temp['song'])
+        output_arr.append(df_temp['artist'])
+        ez = str(df_temp['ez'])
+        hd = str(df_temp['hd'])
+        ins = str(df_temp['in'])
+        sp = str(df_temp['sp'])
+        diff = " / ".join([ez, hd, ins, sp])
+        output_arr.append(diff)
+        output_arr.append(str(df_temp['len']))
+
+        return output_arr
+    except Exception as e:
+        print(e)
+        return 0
