@@ -26,7 +26,7 @@ phigros_df = pd.read_csv("data/phigros.csv", encoding='utf-8-sig')
 client = commands.Bot(command_prefix='~')
 client.remove_command('help')
 
-token = "NjIyMzQxNzQ2MTg5NDAyMTMy.XXyksg.EZP5X3C4hBF_o_lhIYOWtFuU0A4"
+token = "token"
 
 #Login
 @client.event
